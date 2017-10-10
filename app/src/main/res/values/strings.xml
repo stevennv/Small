@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Small</string>
+    <string name="new_game">New Game</string>
+    <string name="quit_game">Quit</string>
+    <string name="rate_app">Rate App</string>
+    <string name="end_game">Game has finished</string>
+    <string name="ok">OK</string>
+    <string name="hightest_score">Hightest Score</string>
+</resources>
