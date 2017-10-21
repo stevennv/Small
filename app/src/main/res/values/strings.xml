@@ -6,4 +6,6 @@
     <string name="end_game">Game has finished</string>
     <string name="ok">OK</string>
     <string name="hightest_score">Hightest Score</string>
+    <string name="facebook_app_id">1926192547645673</string>
+    <string name="fb_login_protocol_scheme">fb1926192547645673</string>
 </resources>

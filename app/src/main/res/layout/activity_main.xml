@@ -25,9 +25,9 @@
 
         <Button
             android:id="@+id/btn_game_reflex"
-            android:layout_marginTop="20dp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/bg_item_menu"
             android:padding="20dp"
@@ -35,9 +35,9 @@
             android:textColor="@color/white" />
 
         <Button
-            android:layout_marginTop="20dp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/bg_item_menu"
             android:padding="20dp"
@@ -45,13 +45,21 @@
             android:textColor="@color/white" />
 
         <Button
-            android:layout_marginTop="20dp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/bg_item_menu"
             android:padding="20dp"
             android:text="@string/quit_game"
             android:textColor="@color/white" />
+
+        <com.facebook.share.widget.LikeView
+            android:id="@+id/like_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
     </LinearLayout>
+
+
 </RelativeLayout>

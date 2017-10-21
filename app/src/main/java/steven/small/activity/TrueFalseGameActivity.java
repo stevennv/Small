@@ -1,25 +1,32 @@
 package steven.small.activity;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nispok.snackbar.Snackbar;
 
 import java.util.Random;
 
 import steven.small.R;
 import steven.small.utils.CoutTime;
+import steven.small.utils.SharedPreferencesUtils;
+import steven.small.utils.ToastUltis;
 
 public class TrueFalseGameActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = TrueFalseGameActivity.class.getSimpleName();
+    private Activity mActivity;
     private TextView tvQuestion;
     private TextView tvTrue;
     private TextView tvFalse;
@@ -35,6 +42,8 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
     private int isEnd = 0;
     private CoutTime coutTimer;
     private int topScore;
+    private SharedPreferencesUtils utils;
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,8 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
     }
 
     protected void iniUI() {
+        inflater = getLayoutInflater();
+        utils = new SharedPreferencesUtils(this);
         tvQuestion = (TextView) findViewById(R.id.tv_question);
         tvTrue = (TextView) findViewById(R.id.tv_true);
         tvFalse = (TextView) findViewById(R.id.tv_false);
@@ -51,14 +62,14 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
         tvScore = (TextView) findViewById(R.id.tv_score);
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Baloo-Regular.ttf");
         tvQuestion.setTypeface(font);
-        setUpTopScore(numberQuestion);
+        topScore = utils.getHightScoreGame1();
         creatQuestion(1);
         tvTrue.setOnClickListener(this);
         tvFalse.setOnClickListener(this);
     }
 
     private void creatQuestion(int level) {
-        coutTimer = new CoutTime(5000, 250, progressBar, isEnd, new CoutTime.checkFinish() {
+        coutTimer = new CoutTime(3000, 250, progressBar, isEnd, new CoutTime.checkFinish() {
             @Override
             public void finished() {
                 endGame();
@@ -69,7 +80,6 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
             Random random = new Random();
             firstNumber = random.nextInt(10) + 1;
             secondNumber = random.nextInt(10) + 1;
-            Log.d(TAG, "creatQuestion: " + firstNumber + "\n" + secondNumber);
             resultTrueNumber = firstNumber + secondNumber;
             errorNumber = random.nextInt(5) + 1;
             int check = random.nextInt(2);
@@ -86,26 +96,39 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
             }
         }
         tvScore.setText("Điểm của bạn : " + numberQuestion + "\n " + "Điểm cao nhất : " + topScore);
-        setUpTopScore(numberQuestion);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        coutTimer.cancel();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_true:
-                Log.d(TAG, "onClick: " + isEnd);
                 coutTimer.cancel();
                 if (isEnd == 2) {
                     Toast.makeText(TrueFalseGameActivity.this, "Hết giờ", Toast.LENGTH_SHORT).show();
                     endGame();
                 } else {
                     if (isTrue) {
-                        Toast.makeText(TrueFalseGameActivity.this, "Đúng rồi", Toast.LENGTH_SHORT).show();
                         numberQuestion++;
+                        new CountDownTimer(1000, 250) {
+                            @Override
+                            public void onTick(long l) {
+                                ToastUltis.showCustomToast(inflater, TrueFalseGameActivity.this, true, 500);
+                            }
 
-                        creatQuestion(1);
+                            @Override
+                            public void onFinish() {
+
+                                creatQuestion(1);
+                            }
+                        }.start();
+
                     } else {
-                        Toast.makeText(TrueFalseGameActivity.this, "Sai rồi", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.INVISIBLE);
                         endGame();
                     }
@@ -113,21 +136,29 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
 
                 break;
             case R.id.tv_false:
-                Log.d(TAG, "onClick: " + isEnd);
                 coutTimer.cancel();
                 if (isEnd == 2) {
                     Toast.makeText(TrueFalseGameActivity.this, "Hết giờ", Toast.LENGTH_SHORT).show();
                     endGame();
                 } else {
                     if (!isTrue) {
-                        Toast.makeText(TrueFalseGameActivity.this, "Đúng rồi", Toast.LENGTH_SHORT).show();
                         numberQuestion++;
-//                        tvScore.setText("Điểm của bạn : " + numberQuestion + " ");
-                        creatQuestion(1);
+                        new CountDownTimer(1000, 250) {
+                            @Override
+                            public void onTick(long l) {
+                                ToastUltis.showCustomToast(inflater, TrueFalseGameActivity.this, true
+                                        , 500);
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                creatQuestion(1);
+                            }
+                        }.start();
                     } else {
-                        Toast.makeText(TrueFalseGameActivity.this, "Sai rồi", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.INVISIBLE);
                         endGame();
+
                     }
                 }
                 break;
@@ -143,14 +174,8 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
                         finish();
                     }
                 }).show();
-    }
-
-    private void setUpTopScore(int currentScore) {
-        SharedPreferences utils = getSharedPreferences("SMALL", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = utils.edit();
-        topScore = utils.getInt("TOP_GAME_1", 0);
-        if (currentScore > topScore)
-            editor.putInt("TOP_GAME_1", currentScore);
-
+        if (numberQuestion > topScore) {
+            utils.saveHightScoreGame1(numberQuestion);
+        }
     }
 }

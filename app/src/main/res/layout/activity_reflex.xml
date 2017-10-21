@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg"
+    android:gravity="center_horizontal"
     tools:context="steven.small.activity.ReflexActivity">
 
     <LinearLayout
@@ -43,26 +44,45 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="20dp"
-                     />
+                    android:layout_marginLeft="20dp" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_answer2"
-                android:layout_marginLeft="20dp"
                 android:layout_width="130dp"
-                android:layout_height="130dp">
+                android:layout_height="130dp"
+                android:layout_marginLeft="20dp">
+
                 <ImageView
-                    android:background="@drawable/oval"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/oval" />
+
                 <ImageView
                     android:id="@+id/btn_answer2"
-                    android:layout_centerInParent="true"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                     />
+                    android:layout_centerInParent="true" />
             </RelativeLayout>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar_rival"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_margin="20dp"
+            android:progress="100"
+            android:progressDrawable="@drawable/blue_progress_bar" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_info_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/padding_20"
+        android:gravity="center"
+        android:textColor="@color/colorAccent" />
 </RelativeLayout>
