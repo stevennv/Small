@@ -1,10 +1,12 @@
 package steven.small.activity;
 
 import android.content.DialogInterface;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,11 +19,13 @@ import java.util.List;
 import java.util.Random;
 
 import steven.small.R;
+import steven.small.dialog.GuideDialog;
 import steven.small.model.OTT;
 import steven.small.utils.CoutTime;
 import steven.small.utils.SharedPreferencesUtils;
 
 public class ReflexActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = ReflexActivity.class.getSimpleName();
     private ImageView imgQuestion;
     private ImageView imgAnswer1;
     private ImageView imgAnswer2;
@@ -53,9 +57,16 @@ public class ReflexActivity extends AppCompatActivity implements View.OnClickLis
         imgAnswer2 = (ImageView) findViewById(R.id.btn_answer2);
         rlAnswer1 = (RelativeLayout) findViewById(R.id.rl_answer1);
         rlAnswer2 = (RelativeLayout) findViewById(R.id.rl_answer2);
-        addQuestion();
+
         rlAnswer1.setOnClickListener(this);
         rlAnswer2.setOnClickListener(this);
+        GuideDialog dialog = new GuideDialog(this, new GuideDialog.onClick() {
+            @Override
+            public void confirm() {
+                addQuestion();
+            }
+        });
+        dialog.show();
     }
 
     private void addQuestion() {

@@ -20,6 +20,7 @@ import com.nispok.snackbar.Snackbar;
 import java.util.Random;
 
 import steven.small.R;
+import steven.small.dialog.GuideDialog;
 import steven.small.utils.CoutTime;
 import steven.small.utils.SharedPreferencesUtils;
 import steven.small.utils.ToastUltis;

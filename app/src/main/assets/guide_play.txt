@@ -1,0 +1,5 @@
+Hướng dẫn chơi :
+Mỗi vòng chơi sẽ hiện lên 1 hình bất kỳ. Nhiệm vụ của bạn là phải chọn 1 trong 2 hình bên dưới để trả lời .
+Nếu hình câu hỏi có màu xanh bạn phải chọn 1 hình bên dưới để thắng được hình câu hỏi.
+Nếu hình câu hỏi có màu đỏ bạn phải chọn 1 hình bên dưới để thua được hình câu hỏi.
+Mỗi câu trả lời đúng được +1 điểm.
