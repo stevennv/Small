@@ -64,9 +64,9 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Baloo-Regular.ttf");
         tvQuestion.setTypeface(font);
         topScore = utils.getHightScoreGame1();
-        creatQuestion(1);
         tvTrue.setOnClickListener(this);
         tvFalse.setOnClickListener(this);
+        waitReady();
     }
 
     private void creatQuestion(int level) {
@@ -178,5 +178,15 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
         if (numberQuestion > topScore) {
             utils.saveHightScoreGame1(numberQuestion);
         }
+    }
+
+    void waitReady() {
+        GuideDialog dialog = new GuideDialog(this, new GuideDialog.onClick() {
+            @Override
+            public void confirm() {
+                creatQuestion(1);
+            }
+        });
+        dialog.show();
     }
 }

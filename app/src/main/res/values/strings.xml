@@ -2,10 +2,16 @@
     <string name="app_name">Small</string>
     <string name="new_game">New Game</string>
     <string name="quit_game">Quit</string>
+    <string name="log_out">Logout</string>
     <string name="rate_app">Rate App</string>
     <string name="end_game">Game has finished</string>
     <string name="ok">OK</string>
     <string name="hightest_score">Hightest Score</string>
     <string name="facebook_app_id">1926192547645673</string>
     <string name="fb_login_protocol_scheme">fb1926192547645673</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="new_game_1">New game 1</string>
+    <string name="new_game_2">New game 2</string>
+    <string name="invite_play">Invite friend</string>
+    <string name="invite">Invite</string>
 </resources>

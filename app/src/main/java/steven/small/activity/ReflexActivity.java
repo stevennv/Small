@@ -14,6 +14,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,6 +43,7 @@ public class ReflexActivity extends AppCompatActivity implements View.OnClickLis
     private int topScore;
     private SharedPreferencesUtils utils;
     private ProgressBar progressBar;
+    private DatabaseReference mRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class ReflexActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     protected void iniUI() {
+        mRoot = FirebaseDatabase.getInstance().getReference();
         utils = new SharedPreferencesUtils(this);
         topScore = utils.getHightScoreGame2();
         progressBar = (ProgressBar) findViewById(R.id.progress_bar_rival);

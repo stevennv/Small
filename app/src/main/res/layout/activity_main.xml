@@ -1,10 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg"
     tools:context="steven.small.activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center">
+
+        <RelativeLayout
+
+            android:id="@+id/rl_noti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left">
+
+            <ImageView
+                android:id="@+id/img_noti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/icon_notification" />
+
+            <TextView
+                android:visibility="gone"
+                android:gravity="center"
+                android:id="@+id/tv_number_noti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-20dp"
+                android:layout_toRightOf="@+id/img_noti"
+                android:background="@drawable/ic_online"
+                android:padding="2dp"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_avatar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="3dp" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +66,7 @@
             android:layout_weight="1"
             android:background="@drawable/bg_item_menu"
             android:padding="20dp"
-            android:text="@string/new_game"
+            android:text="@string/new_game_1"
             android:textColor="@color/white" />
 
         <Button
@@ -31,17 +77,18 @@
             android:layout_weight="1"
             android:background="@drawable/bg_item_menu"
             android:padding="20dp"
-            android:text="@string/hightest_score"
+            android:text="@string/new_game_2"
             android:textColor="@color/white" />
 
         <Button
+            android:id="@+id/btn_invite"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@drawable/bg_item_menu"
             android:padding="20dp"
-            android:text="@string/rate_app"
+            android:text="@string/invite_play"
             android:textColor="@color/white" />
 
         <Button
@@ -54,11 +101,39 @@
             android:text="@string/quit_game"
             android:textColor="@color/white" />
 
-        <com.facebook.share.widget.LikeView
-            android:id="@+id/like_view"
+        <LinearLayout
+            android:id="@+id/ll_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/padding_20"
+                android:gravity="center"
+                android:text="Login for play with friend!!!"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/ib_login_fb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_20"
+                android:background="@mipmap/ic_login_fb" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_log_out"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_item_menu"
+            android:padding="20dp"
+            android:text="@string/log_out"
+            android:textColor="@color/white"
+            android:visibility="gone" />
     </LinearLayout>
 
 
