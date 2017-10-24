@@ -34,6 +34,15 @@ public class Notification {
     private String id;
     private String avatar;
 
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
+    private boolean isSelect;
     public boolean isCheck() {
         return isCheck;
     }

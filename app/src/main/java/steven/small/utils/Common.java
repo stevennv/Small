@@ -10,4 +10,5 @@ public class Common {
     public static final String USER_INFO = "USER_INFO";
     public static final String ROOM_RIVAL = "ROOM_RIVAL";
     public static final String KEY_RIVAL = "KEY_RIVAL";
+    public static final String ID_RIVAL = "ID_RIVAL";
 }

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnReflex;
     private Button btnInvite;
     private Button btnLogout;
+    private Button btnQuestion;
     private LikeView likeView;
     private ImageView ibLoginFb;
     private LinearLayout llLogin;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout rlNoti;
     private TextView tvNumberNoti;
     private int numberNoti;
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnReflex = (Button) findViewById(R.id.btn_game_reflex);
         btnInvite = (Button) findViewById(R.id.btn_invite);
         btnLogout = (Button) findViewById(R.id.btn_log_out);
+        btnQuestion = (Button) findViewById(R.id.btn_question);
         tvNumberNoti = (TextView) findViewById(R.id.tv_number_noti);
         civAvatar = (CircleImageView) findViewById(R.id.civ_avatar);
         ibLoginFb = (ImageView) findViewById(R.id.ib_login_fb);
@@ -91,9 +94,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnInvite.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
         rlNoti.setOnClickListener(this);
+        btnQuestion.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         if (AccessToken.getCurrentAccessToken() != null) {
             listenNotifi();
-            if (utils.getRoomRival() != null || !utils.getRoomRival().equals("")) {
+            Log.d(TAG, "iniUI: " + utils.getRoomRival());
+            if (utils.getKeyRival() != null || !utils.getKeyRival().equals("")) {
                 listenAccept();
             }
         }
@@ -124,7 +134,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_log_out:
                 logOut();
                 break;
+            case R.id.btn_question:
+                Intent intent3 = new Intent(this, QuestionGameActivity.class);
+                startActivity(intent3);
+                break;
             case R.id.rl_noti:
+                numberNoti = Integer.parseInt(tvNumberNoti.getText().toString());
                 if (numberNoti != 0) {
                     NotificationDialog dialog = new NotificationDialog(this);
                     dialog.show();
@@ -153,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: ");
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -211,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long numberNoti = dataSnapshot.getChildrenCount();
-                Log.d(TAG, "onDataChange: " + numberNoti);
                 if (numberNoti == 0) {
                     tvNumberNoti.setVisibility(View.GONE);
                 } else {
@@ -228,15 +243,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void listenAccept() {
+        Log.d(TAG, "listenAccept: " + utils.getKeyRival());
         mRoot.child("HOME").child("HOME_" + utils.getRoomRival()).child("Invite")
                 .child(utils.getKeyRival()).child("Accept").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
                     boolean check = dataSnapshot.getValue(Boolean.class);
+                    Log.d(TAG, "onDataChange: " + check);
                     if (check == true) {
-                        Intent intent = new Intent(MainActivity.this, TrueFalseGameActivity.class);
-                        startActivity(intent);
+                        if (count == 0) {
+                            Intent intent = new Intent(MainActivity.this, TrueFalseGameActivity.class);
+                            startActivity(intent);
+                            count++;
+                        }
                     }
                 }
             }
@@ -246,8 +266,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        utils.saveKeyRival("");
-        utils.saveRoomRival("");
+
     }
 
 }

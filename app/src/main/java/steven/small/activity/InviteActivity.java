@@ -101,6 +101,7 @@ public class InviteActivity extends AppCompatActivity implements View.OnClickLis
         mRoot.child("HOME").child("HOME_" + invited.getId()).child("Invite").child(key).setValue(userInfo);
         mRoot.child("HOME").child("HOME_" + invited.getId()).child("Invite").child(key).child("Accept").setValue(false);
         mRoot.child("HOME").child("HOME_" + invited.getId()).child("Invite").child(key).child("key").setValue(key);
+        mRoot.child("HOME").child("HOME_" + invited.getId()).child("Invite").child(key).child("isSelect").setValue(false);
         utils.saveRoomRival(invited.getId());
         utils.saveKeyRival(key);
         finish();

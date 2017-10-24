@@ -6,23 +6,37 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civ_avatar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:civ_border_color="@color/black"
-        app:civ_border_width="3dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="3dp" />
+
+        <TextView
+            android:id="@+id/tv_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_20"
+            android:ellipsize="end"
+            android:lines="2"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textStyle="italic" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_notification"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_status"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/padding_20"
-        android:ellipsize="end"
-        android:lines="2"
-        android:maxLines="2"
         android:textColor="@color/black"
-        android:textStyle="italic" />
+        android:textSize="16dp"
+        android:textStyle="bold" />
 </LinearLayout>

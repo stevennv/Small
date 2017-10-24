@@ -38,7 +38,8 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".activity.InviteActivity"></activity>
+        <activity android:name=".activity.InviteActivity" />
+        <activity android:name=".activity.QuestionGameActivity"></activity>
     </application>
 
 </manifest>

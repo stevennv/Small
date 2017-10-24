@@ -17,6 +17,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import steven.small.R;
 import steven.small.model.Invite;
+import steven.small.utils.SharedPreferencesUtils;
 
 /**
  * Created by Admin on 10/23/2017.
@@ -26,6 +27,7 @@ public class InviteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Context context;
     private List<Invite> list;
     private onClick onClick;
+    private SharedPreferencesUtils utils;
 
     public InviteAdapter(Context context, List<Invite> list, onClick onClick) {
         this.context = context;
@@ -46,8 +48,12 @@ public class InviteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         final Invite invite = list.get(position);
+        utils = new SharedPreferencesUtils(context);
         Glide.with(context).load(invite.getAvatar()).into(myViewHolder.civAvatar);
         myViewHolder.tvName.setText(invite.getName());
+        if (invite.getId().equals(utils.getUserInfo().getId())) {
+            myViewHolder.llItem.setVisibility(View.GONE);
+        }
         if (invite.isOnline()) {
             myViewHolder.imgOnline.setVisibility(View.VISIBLE);
         } else {

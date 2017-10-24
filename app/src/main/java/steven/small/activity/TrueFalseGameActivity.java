@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nispok.snackbar.Snackbar;
 
 import java.util.Random;
 
 import steven.small.R;
 import steven.small.dialog.GuideDialog;
+import steven.small.utils.Common;
 import steven.small.utils.CoutTime;
 import steven.small.utils.SharedPreferencesUtils;
 import steven.small.utils.ToastUltis;
@@ -45,6 +49,8 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
     private int topScore;
     private SharedPreferencesUtils utils;
     private LayoutInflater inflater;
+    private DatabaseReference mRoot;
+    private String keyRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
     }
 
     protected void iniUI() {
+        mRoot = FirebaseDatabase.getInstance().getReference();
         inflater = getLayoutInflater();
         utils = new SharedPreferencesUtils(this);
         tvQuestion = (TextView) findViewById(R.id.tv_question);
@@ -67,6 +74,19 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
         tvTrue.setOnClickListener(this);
         tvFalse.setOnClickListener(this);
         waitReady();
+//        if (getIntent() != null) {
+//            keyRoom = getIntent().getStringExtra(Common.KEY_RIVAL);
+//        } else {
+//            keyRoom = utils.getKeyRival();
+//            Log.d(TAG, "iniUI: " + keyRoom);
+//            utils.saveKeyRival("");
+//            utils.saveRoomRival("");
+//        }
+        if (utils.getKeyRival() != null) {
+            keyRoom = utils.getKeyRival();
+        } else {
+            keyRoom = getIntent().getStringExtra(Common.KEY_RIVAL);
+        }
     }
 
     private void creatQuestion(int level) {
@@ -173,11 +193,18 @@ public class TrueFalseGameActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
+                        if (utils.getRoomRival() != null) {
+                            mRoot.child("HOME").child("HOME_" + utils.getRoomRival()).child("Invite").removeValue();
+                        }
+                        utils.saveKeyRival("");
+                        utils.saveRoomRival("");
                     }
                 }).show();
         if (numberQuestion > topScore) {
             utils.saveHightScoreGame1(numberQuestion);
         }
+        mRoot.child("ROOM_PLAY").child("TABLE_" + keyRoom).child(utils.getUserInfo().getId()).setValue(numberQuestion);
+
     }
 
     void waitReady() {
