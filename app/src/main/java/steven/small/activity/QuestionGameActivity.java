@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -31,8 +32,10 @@ import steven.small.R;
 import steven.small.dialog.GraphDialog;
 import steven.small.dialog.Question;
 import steven.small.utils.ToastUltis;
+import steven.small.utils.Utils;
 
 public class QuestionGameActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = QuestionGameActivity.class.getSimpleName();
     private Question question1;
     private List<Question> list = new ArrayList<>();
     private DatabaseReference mRoot;
@@ -50,6 +53,7 @@ public class QuestionGameActivity extends AppCompatActivity implements View.OnCl
     private int correctAnswer;
     private LayoutInflater inflater;
     private int number = 0;
+    private List<Integer> listAnswer = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,10 @@ public class QuestionGameActivity extends AppCompatActivity implements View.OnCl
         btnAnswerB = findViewById(R.id.btn_answerB);
         btnAnswerC = findViewById(R.id.btn_answerC);
         btnAnswerD = findViewById(R.id.btn_answerD);
+        listAnswer.add(1);
+        listAnswer.add(2);
+        listAnswer.add(3);
+        listAnswer.add(4);
         btnAnswerA.setOnClickListener(this);
         btnAnswerB.setOnClickListener(this);
         btnAnswerC.setOnClickListener(this);
@@ -83,6 +91,7 @@ public class QuestionGameActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getData() {
+        setVisibaleAnswer();
         mRoot.child("CHECK_QUESTION").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -153,6 +162,9 @@ public class QuestionGameActivity extends AppCompatActivity implements View.OnCl
             case R.id.img_ask:
                 GraphDialog dialog = new GraphDialog(this);
                 dialog.show();
+                break;
+            case R.id.img_50_50:
+                suggest50(correctAnswer);
                 break;
         }
     }
@@ -225,5 +237,66 @@ public class QuestionGameActivity extends AppCompatActivity implements View.OnCl
         } else {
             ToastUltis.showCustomToast(getLayoutInflater(), this, false, 500);
         }
+    }
+
+    private void suggest50(int correct) {
+        setEnableButton();
+        if (correct == 1) {
+            Random random = new Random();
+            int first = random.nextInt(3) + 2;
+            setInvisiableAnswer(first);
+            int second = Utils.RandomNumberRange(4, 2, first);
+            setInvisiableAnswer(second);
+            Log.d(TAG, "suggest50: " + first + "\n" + second);
+        } else if (correct == 4) {
+            Random r = new Random();
+            int first = r.nextInt(2) + 1;
+            setInvisiableAnswer(first);
+            int second = Utils.RandomNumberRange(3, 1, first);
+            setInvisiableAnswer(second);
+        } else if (correct == 2) {
+            int first = Utils.RandomNumberRange(1, 4, 2);
+            setInvisiableAnswer(first);
+            int second;
+            do {
+                second = Utils.RandomNumberRange(1, 4, 2);
+                Log.d(TAG, "suggest50: " + second);
+            } while (second == first);
+            setInvisiableAnswer(second);
+        } else {
+            int first = Utils.RandomNumberRange(1, 4, 3);
+            setInvisiableAnswer(first);
+            int second;
+            do {
+                second = Utils.RandomNumberRange(1, 4, 3);
+                Log.d(TAG, "suggest50: " + second);
+            } while (second == first);
+            setInvisiableAnswer(second);
+        }
+        img50.setVisibility(View.INVISIBLE);
+    }
+
+    private void setInvisiableAnswer(int number) {
+        switch (number) {
+            case 1:
+                btnAnswerA.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                btnAnswerB.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                btnAnswerC.setVisibility(View.INVISIBLE);
+                break;
+            case 4:
+                btnAnswerD.setVisibility(View.INVISIBLE);
+                break;
+        }
+    }
+
+    private void setVisibaleAnswer() {
+        btnAnswerA.setVisibility(View.VISIBLE);
+        btnAnswerB.setVisibility(View.VISIBLE);
+        btnAnswerC.setVisibility(View.VISIBLE);
+        btnAnswerD.setVisibility(View.VISIBLE);
     }
 }

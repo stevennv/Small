@@ -2,6 +2,7 @@ package steven.small.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,11 +47,18 @@ public class GraphDialog extends Dialog {
         int numValues = 4;
 
         List<SliceValue> values = new ArrayList<SliceValue>();
-        for (int i = 0; i < numValues; ++i) {
-            SliceValue sliceValue = new SliceValue(25, ChartUtils.pickColor());
-            values.add(sliceValue);
-        }
-
+//        for (int i = 0; i < numValues; ++i) {
+//            SliceValue sliceValue = new SliceValue(25, ChartUtils.pickColor());
+//            values.add(sliceValue);
+//        }
+        SliceValue value1= new SliceValue(23, Color.RED);
+        SliceValue value2= new SliceValue(10, Color.GREEN);
+        SliceValue value3= new SliceValue(40, Color.YELLOW);
+        SliceValue value4= new SliceValue(27, Color.CYAN);
+        values.add(value1);
+        values.add(value2);
+        values.add(value3);
+        values.add(value4);
         data = new PieChartData(values);
         data.setHasLabels(hasLabels);
         data.setHasLabelsOnlyForSelected(hasLabelForSelected);
