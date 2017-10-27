@@ -14,5 +14,7 @@
     <string name="new_game_2">New game 2</string>
     <string name="invite_play">Invite friend</string>
     <string name="invite">Invite</string>
+    <string name="album">Album</string>
+    <string name="sms">SMS</string>
     <string name="complete_game">Bạn đã hoàn thành phần chơi</string>
 </resources>

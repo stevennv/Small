@@ -40,9 +40,8 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical|right"
                         android:layout_marginRight="10dp"
-                        android:layout_toRightOf="@+id/civ_avatar"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="right"
                         android:lines="1" />
 
                     <TextView
@@ -62,6 +61,7 @@
                         android:paddingTop="3dp"
                         android:textSize="13sp"
                         android:visibility="gone" />
+
                     <TextView
                         android:id="@+id/tv_title_toolbar"
                         android:layout_width="wrap_content"

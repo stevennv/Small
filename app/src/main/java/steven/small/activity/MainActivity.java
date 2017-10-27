@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnInvite;
     private Button btnLogout;
     private Button btnQuestion;
+    private Button btnAlbum;
+    private Button btnSms;
     private LikeView likeView;
     private ImageView ibLoginFb;
     private LinearLayout llLogin;
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnInvite = (Button) findViewById(R.id.btn_invite);
         btnLogout = (Button) findViewById(R.id.btn_log_out);
         btnQuestion = (Button) findViewById(R.id.btn_question);
+        btnAlbum = (Button) findViewById(R.id.btn_album);
+        btnSms = (Button) findViewById(R.id.btn_sms);
         tvNumberNoti = (TextView) findViewById(R.id.tv_number_noti);
         civAvatar = (CircleImageView) findViewById(R.id.civ_avatar);
         ibLoginFb = (ImageView) findViewById(R.id.ib_login_fb);
@@ -93,8 +97,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnReflex.setOnClickListener(this);
         btnInvite.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
+        btnAlbum.setOnClickListener(this);
         rlNoti.setOnClickListener(this);
         btnQuestion.setOnClickListener(this);
+        btnSms.setOnClickListener(this);
     }
 
     @Override
@@ -144,6 +150,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     NotificationDialog dialog = new NotificationDialog(this);
                     dialog.show();
                 }
+                break;
+            case R.id.btn_album:
+                Intent intent4 = new Intent(this, AlbumActivity.class);
+                startActivity(intent4);
+                break;
+            case R.id.btn_sms:
+                Intent intent5 = new Intent(this, SmsActivity.class);
+                startActivity(intent5);
                 break;
         }
     }
